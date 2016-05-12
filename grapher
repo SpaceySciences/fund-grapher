@@ -13,7 +13,11 @@ print 'DONE!'
 print 'making soup...'
 
 soup = BeautifulSoup(html, 'html.parser')
-text = soup.get_text()
+
+print 'cleaning soup...'
+# get ALL the backer info... mwahaha
+text = str(soup.find_all("div", class_="backer-info"))
+#text = soup.get_text()
 
 print 'done!'
 
