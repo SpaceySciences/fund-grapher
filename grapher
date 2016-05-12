@@ -9,7 +9,7 @@ import urllib
 ## Data list
 # this is a list of lists
 # should be of the form:
-# [ [name, date, time, ammount], [name, date, time, ammount], ... ]
+# [ [name, ammount, date, time], [name, ammount, date, time], ... ]
 data = []
 
 # ===================== #
@@ -32,7 +32,13 @@ for backer_info in soup.find_all("div", class_="backer-info"):
         if ch in temp:
             temp = temp.replace(ch,"")
     # place the backer info in the data list
-    data.append(temp)
+    unit = [
+        temp[:temp.find("$")], # gets name
+        temp[temp.find("$"):temp.find(".")+3], # gets the amount given
+        temp[temp.find(".")+3:temp.find("@")], # gets the date
+        temp[temp.find("@")+2:] # gets the time
+    ]
+    data.append(unit)
 print 'done!'
 
 # ============================= #
