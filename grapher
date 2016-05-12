@@ -2,9 +2,19 @@
 
 # import the soup
 from bs4 import BeautifulSoup
+import urllib
 
 print 'loading html...'
 
-html = urllib.urlopen('https://dar.uga.edu/funder/campaigns/uga-small-satellite-research-laboratory-help-us-go-to-space/#backers').read()
+html = urllib.urlopen('https://dar.uga.edu/funder/campaigns/uga-small-satellite-research-laboratory-help-us-go-to-space/').read()
 
 print 'DONE!'
+
+print 'making soup...'
+
+soup = BeautifulSoup(html, 'html.parser')
+text = soup.get_text()
+
+print 'done!'
+
+print text
