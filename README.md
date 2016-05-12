@@ -13,4 +13,10 @@ You may need to change the permissions of the <code>grapher</code> file with <co
 
 ## USE
 
-to run itially type: <code>./grapher</code>
+to run itially type: <code>./grapher</code>, and you will recieve a usage print
+
+### Args
+* | -t | returns the total ammount raised
+* | -d | graphs the ammount raised per day
+* | -v | verbose print option
+
