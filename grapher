@@ -12,6 +12,8 @@ import urllib
 # [ [name, ammount, date, time], [name, ammount, date, time], ... ]
 data = []
 
+total_raised = 0.0
+
 # ===================== #
 
 
@@ -34,13 +36,24 @@ for backer_info in soup.find_all("div", class_="backer-info"):
     # place the backer info in the data list
     unit = [
         temp[:temp.find("$")], # gets name
-        temp[temp.find("$"):temp.find(".")+3], # gets the amount given
+        temp[temp.find("$")+1:temp.find(".")+3], # gets the amount given
         temp[temp.find(".")+3:temp.find("@")], # gets the date
         temp[temp.find("@")+2:] # gets the time
     ]
     data.append(unit)
-print 'done!'
+print 'DONE!'
 
 # ============================= #
 
-print str(data)
+#print str(data)
+
+# ===== DO SOME FUN THINGS ===== #
+
+# iterate over the data!
+for unit in data:
+    total_raised += float(unit[1])
+
+# ====== PRINT THE DATA ====== #
+print 'TOTAL RAISED:' + str(total_raised)
+
+
