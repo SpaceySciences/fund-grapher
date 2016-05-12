@@ -15,6 +15,10 @@ You may need to change the permissions of the <code>grapher</code> file with <co
 
 to run itially type: <code>./grapher</code>, and you will recieve a usage print
 
+####example:
+
+<code>$ ./grapher -t</code> this will return the total ammount raised
+
 ### Args
 * | -t | returns the total ammount raised
 * | -d | graphs the ammount raised per day

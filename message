@@ -1,1 +1,1 @@
-curl http://textbelt.com/text -d number=7066124719 -d "message=I send this from my terminal"
+curl http://textbelt.com/text -d number=$1 -d "message=I send this from my terminal"
