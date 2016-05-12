@@ -19,10 +19,40 @@ data = []
 
 total_raised = 0.0
 
+verbose = 0 # default is false
+daily   = 0 # default is false
+hourly  = 0 # default is false
+total   = 0 # default is false
+
 # ===================== #
+
+# >>> GRAB ARGS and set to globals
+if len(sys.argv) > 4:
+    print "too many arguments"
+    exit()
+elif len(sys.argv) == 1:
+    print "no arguments detected"
+    exit()
+else:
+    for arg in sys.argv:
+        if arg == "-v":
+            # set verbose
+            verbose = 1
+        elif arg == "-d":
+            # set daily
+            daily = 1
+        elif arg == "-h":
+            hourly = 1
+        elif arg == "-t":
+            total = 1
+        
+
+# <<<
+
 
 # ====== Graphs ======= #
 
+# daily graph
 def dailyGraph( list ):
     prev_date = ""
     val_sum = 0.0
@@ -78,18 +108,31 @@ def dailyGraph( list ):
         val_total -= 1
     sys.stdout.write(" (" + str(val_sum) +")")
     print " "
-        
+
+
+# total return
+def findTotal(data_list):
+    for unit in data_list:
+        global total_raised
+        total_raised += float(unit[ammount])
+    print '\t\t\t\t\t\tTOTAL RAISED: $' + str(total_raised)
+    
 # ===================== #
+
+
 
 # === HTTP GET the raw html === #
 
-print 'loading html...'
+if verbose:
+    print 'loading html...'
 # TODO maybe don't hard code this later
 html = urllib.urlopen('https://dar.uga.edu/funder/campaigns/uga-small-satellite-research-laboratory-help-us-go-to-space/').read()
-print 'DONE!'
-print 'making soup...'
+if verbose:
+    print 'DONE!'
+    print 'making soup...'
 soup = BeautifulSoup(html, 'html.parser')
-print 'cleaning soup...'
+if verbose:
+    print 'cleaning soup...'
 # get ALL the backer-info divs... mwahaha
 for backer_info in soup.find_all("div", class_="backer-info"):
     # gather the data into a temp slot, TODO make this parsing better
@@ -105,21 +148,20 @@ for backer_info in soup.find_all("div", class_="backer-info"):
         temp[temp.find("@")+2:] # gets the time
     ]
     data.append(unit)
-print 'DONE!'
+if verbose:
+    print 'DONE!'
 
 # ============================= #
 
-print '#=#================#=#'
-#print str(data)
 
 # ===== DO SOME FUN THINGS ===== #
 
 # TODO tern this into a method
-# iterate over the data!
-for unit in data:
-    total_raised += float(unit[ammount])
-
 # ====== PRINT THE DATA ====== #
-print '\t\t\t\t\t\tTOTAL RAISED: $' + str(total_raised)
-print '========================================================================================================================'
-dailyGraph(data)
+
+if total:
+    findTotal(data)
+if verbose:
+    print '========================================================================================================================'
+if daily:
+    dailyGraph(data)
