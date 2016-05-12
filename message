@@ -1,0 +1,1 @@
+curl http://textbelt.com/text -d number=########## -d "message=I send this from my terminal"
