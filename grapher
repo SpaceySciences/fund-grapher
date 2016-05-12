@@ -26,12 +26,21 @@ total   = 0 # default is false
 
 # ===================== #
 
+# usage print
+def usage():
+    print "USAGE: at least one command line arg is needed, example: $ ./grapher -t"
+    print " | -t | returns the total ammount raised"
+    print " | -d | graphs the ammount raised per day"
+    print " | -v | verbose print option"
+
 # >>> GRAB ARGS and set to globals
 if len(sys.argv) > 4:
     print "too many arguments"
+    usage()
     exit()
 elif len(sys.argv) == 1:
     print "no arguments detected"
+    usage()
     exit()
 else:
     for arg in sys.argv:
@@ -156,7 +165,6 @@ if verbose:
 
 # ===== DO SOME FUN THINGS ===== #
 
-# TODO tern this into a method
 # ====== PRINT THE DATA ====== #
 
 if total:
