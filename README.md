@@ -1,5 +1,5 @@
 # fund-grapher
-A simple grapher for looking at the funds raised on the goeriga funder
+A simple grapher for looking at the funds raised on the georiga funder
 
 ## Installation & Setup
 
