@@ -37,7 +37,7 @@ def dailyGraph( list ):
                 print "                                                      DAILY GRAPH"
                 print "                                                        ammount"
                 print "                  100       200       300       400       500       600       700       800       900       1000"
-                print "<< DATE >>_________|_________|_________|_________|_________|_________|_________|_________|_________|_________|"
+                print "[{ DATE }]_________|_________|_________|_________|_________|_________|_________|_________|_________|_________|"
                 prev_date = unit[date]
                 sys.stdout.write(str(unit[date]) + ":")
                 val_sum = float(unit[ammount])
@@ -50,7 +50,23 @@ def dailyGraph( list ):
                     while val_total > 0:
                         sys.stdout.write("#")
                         val_total -= 1
-                    sys.stdout.write(" (" + str(val_sum) +")\n" + str(unit[date]) + ":")
+                    sys.stdout.write(" (" + str(val_sum) +")\n")
+                    if (int(prev_date[3:-4]) - int(unit[date][3:-4])) > 1:
+                        # generate all the days where no money was gained :'(
+                        month = int(prev_date[:2])
+                        day_skip = int(prev_date[3:-4]) - 1
+                        day_targ = int(unit[date][3:-4])
+                        year = int(prev_date[-3:])
+                        while day_skip > day_targ:
+                            m_char = ''
+                            if month < 10:
+                                m_char = "0"
+                            sys.stdout.write(m_char + str(month) + "/" + str(day_skip) + "/" + str(year) + " : (0.00)\n")
+                            day_skip -= 1
+                        # add the next day
+                        sys.stdout.write(str(unit[date]) + ":")
+                    else:
+                        sys.stdout.write(str(unit[date]) + ":")
                     prev_date = unit[date]
                     val_sum = float(unit[ammount])
                 was_start = 1
@@ -62,7 +78,6 @@ def dailyGraph( list ):
         val_total -= 1
     sys.stdout.write(" (" + str(val_sum) +")")
     print " "
-
         
 # ===================== #
 
@@ -104,5 +119,6 @@ for unit in data:
     total_raised += float(unit[ammount])
 
 # ====== PRINT THE DATA ====== #
-print 'TOTAL RAISED: $' + str(total_raised)
+print '\t\t\t\t\t\tTOTAL RAISED: $' + str(total_raised)
+print '========================================================================================================================'
 dailyGraph(data)
