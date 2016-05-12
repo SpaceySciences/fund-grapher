@@ -7,9 +7,9 @@ import urllib
 # ====== GLOBALS ====== #
 
 ## Data list
+# this is a list of lists
 # should be of the form:
 # [ [name, date, time, ammount], [name, date, time, ammount], ... ]
-# this is a list of lists
 data = []
 
 # ===================== #
@@ -18,22 +18,23 @@ data = []
 # === HTTP GET the raw html === #
 
 print 'loading html...'
-
+# TODO maybe don't hard code this later
 html = urllib.urlopen('https://dar.uga.edu/funder/campaigns/uga-small-satellite-research-laboratory-help-us-go-to-space/').read()
-
 print 'DONE!'
-
 print 'making soup...'
-
 soup = BeautifulSoup(html, 'html.parser')
-
 print 'cleaning soup...'
 # get ALL the backer-info divs... mwahaha
 for backer_info in soup.find_all("div", class_="backer-info"):
-    print backer_info.get_text().strip()
-
+    # gather the data into a temp slot, TODO make this parsing better
+    temp = backer_info.get_text().strip()
+    for ch in ['\t','\n','u']: # add more chars to replace here
+        if ch in temp:
+            temp = temp.replace(ch,"")
+    # place the backer info in the data list
+    data.append(temp)
 print 'done!'
 
 # ============================= #
 
-#print text
+print str(data)
