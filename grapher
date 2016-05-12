@@ -114,6 +114,7 @@ print '#=#================#=#'
 
 # ===== DO SOME FUN THINGS ===== #
 
+# TODO tern this into a method
 # iterate over the data!
 for unit in data:
     total_raised += float(unit[ammount])
