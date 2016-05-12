@@ -15,10 +15,10 @@ print 'making soup...'
 soup = BeautifulSoup(html, 'html.parser')
 
 print 'cleaning soup...'
-# get ALL the backer info... mwahaha
-text = str(soup.find_all("div", class_="backer-info"))
-#text = soup.get_text()
+# get ALL the backer-info divs... mwahaha
+for backer_info in soup.find_all("div", class_="backer-info"):
+    print backer_info.get_text()
 
 print 'done!'
 
-print text
+#print text
