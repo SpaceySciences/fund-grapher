@@ -3,6 +3,7 @@
 # import the soup
 from bs4 import BeautifulSoup
 import urllib
+import sys
 
 # ====== GLOBALS ====== #
 
@@ -10,12 +11,60 @@ import urllib
 # this is a list of lists
 # should be of the form:
 # [ [name, ammount, date, time], [name, ammount, date, time], ... ]
+name = 0
+ammount = 1
+date = 2
+time = 3
 data = []
 
 total_raised = 0.0
 
 # ===================== #
 
+# ====== Graphs ======= #
+
+def dailyGraph( list ):
+    prev_date = ""
+    val_sum = 0.0
+    was_start = 0
+    for unit in list:
+        if prev_date == unit[date]:
+            # same date, sum 
+            val_sum += float(unit[ammount])
+        else:
+            if prev_date == "":
+                # print graph outlines here
+                print "                                                      DAILY GRAPH"
+                print "                                                        ammount"
+                print "                  100       200       300       400       500       600       700       800       900       1000"
+                print "<< DATE >>_________|_________|_________|_________|_________|_________|_________|_________|_________|_________|"
+                prev_date = unit[date]
+                sys.stdout.write(str(unit[date]) + ":")
+                val_sum = float(unit[ammount])
+                was_start = 1
+            else:
+                # new data, clear values here
+                if was_start:
+                    # print previous values here
+                    val_total = int(val_sum)/10
+                    while val_total > 0:
+                        sys.stdout.write("#")
+                        val_total -= 1
+                    sys.stdout.write(" (" + str(val_sum) +")\n" + str(unit[date]) + ":")
+                    prev_date = unit[date]
+                    val_sum = float(unit[ammount])
+                was_start = 1
+                #sys.stdout.write("\n")
+    # print the last row
+    val_total = int(val_sum)/10
+    while val_total > 0:
+        sys.stdout.write("#")
+        val_total -= 1
+    sys.stdout.write(" (" + str(val_sum) +")")
+    print " "
+
+        
+# ===================== #
 
 # === HTTP GET the raw html === #
 
@@ -52,9 +101,8 @@ print '#=#================#=#'
 
 # iterate over the data!
 for unit in data:
-    total_raised += float(unit[1])
+    total_raised += float(unit[ammount])
 
 # ====== PRINT THE DATA ====== #
 print 'TOTAL RAISED: $' + str(total_raised)
-
-
+dailyGraph(data)
