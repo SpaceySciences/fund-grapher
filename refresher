@@ -1,0 +1,7 @@
+while true
+do
+./grapher -t -d
+sleep 10
+clear
+sleep 10
+done
