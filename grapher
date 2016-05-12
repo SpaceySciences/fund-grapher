@@ -4,6 +4,19 @@
 from bs4 import BeautifulSoup
 import urllib
 
+# ====== GLOBALS ====== #
+
+## Data list
+# should be of the form:
+# [ [name, date, time, ammount], [name, date, time, ammount], ... ]
+# this is a list of lists
+data = []
+
+# ===================== #
+
+
+# === HTTP GET the raw html === #
+
 print 'loading html...'
 
 html = urllib.urlopen('https://dar.uga.edu/funder/campaigns/uga-small-satellite-research-laboratory-help-us-go-to-space/').read()
@@ -17,8 +30,10 @@ soup = BeautifulSoup(html, 'html.parser')
 print 'cleaning soup...'
 # get ALL the backer-info divs... mwahaha
 for backer_info in soup.find_all("div", class_="backer-info"):
-    print backer_info.get_text()
+    print backer_info.get_text().strip()
 
 print 'done!'
+
+# ============================= #
 
 #print text
